@@ -13,7 +13,7 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
         var handler : Handler  = Handler()
         handler.postDelayed({
-            startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+            startActivity(Intent(this@SplashActivity, FingerDetectActivity::class.java))
         }, 3000)
     }
 }
