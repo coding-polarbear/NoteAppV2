@@ -2,12 +2,36 @@ package kr.purplebeen.noteapp.activities
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_add.*
+import kr.purplebeen.noteapp.Note
 import kr.purplebeen.noteapp.R
+import ninja.sakib.pultusorm.core.PultusORM
 
 class AddActivity : AppCompatActivity() {
+    lateinit var  pultusORM : PultusORM
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add)
+        setORM()
+        setListeners()
+    }
+
+    fun setORM() {
+        val appPath : String = applicationContext.filesDir.absolutePath
+        pultusORM = PultusORM("note.db", appPath)
+    }
+
+    fun setListeners() {
+        saveButton.setOnClickListener {
+            var note : Note = Note()
+            note.title = editTitle.text.toString()
+            note.content = editContent.text.toString()
+            pultusORM.save(note)
+
+            Toast.makeText(applicationContext, "성공적으로 저장하였습니다!", Toast.LENGTH_SHORT).show()
+            finish()
+        }
     }
 }
