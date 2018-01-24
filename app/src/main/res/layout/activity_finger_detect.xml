@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
         android:textColor="@android:color/white"
-        android:text="계속하려면 지문을 입력하세요"
+        android:text="계속하려면 지문 버튼을 누르세요"
         android:id="@+id/statusText"
         android:textAlignment="center"
         android:layout_margin="10dp"
