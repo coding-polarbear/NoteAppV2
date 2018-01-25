@@ -3,6 +3,7 @@
     package="kr.purplebeen.noteapp">
 
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+
     <application
         android:name=".App"
         android:allowBackup="false"
@@ -24,7 +25,8 @@
         <activity
             android:name=".activities.FingerDetectActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activities.AddActivity"></activity>
+        <activity android:name=".activities.AddActivity" />
+        <activity android:name=".activities.DetailViewActivity"></activity>
     </application>
 
 </manifest>
