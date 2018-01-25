@@ -1,5 +1,6 @@
 package kr.purplebeen.noteapp.activities
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_detail_view.*
@@ -9,7 +10,9 @@ import ninja.sakib.pultusorm.core.PultusORM
 import ninja.sakib.pultusorm.core.PultusORMCondition
 
 class DetailViewActivity : AppCompatActivity() {
-
+    val position : Int by lazy {
+        intent.extras.getInt("position")
+    }
     lateinit var pultusORM : PultusORM
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,6 +20,7 @@ class DetailViewActivity : AppCompatActivity() {
 
         setORM()
         loadData()
+        setListeners()
     }
 
 
@@ -27,10 +31,23 @@ class DetailViewActivity : AppCompatActivity() {
     }
 
     fun loadData() {
-        val position : Int = intent.extras.getInt("position")
+
         var note : Note = pultusORM.find(Note())[position] as Note
         titleText.text = note.title
         contentText.text  = note.content
+    }
+
+    fun setListeners() {
+        editButton.setOnClickListener{
+            var newIntent  : Intent = Intent(this@DetailViewActivity, EditActivity::class.java)
+            newIntent.putExtra("position", position)
+            startActivity(newIntent)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadData()
     }
 
 }
