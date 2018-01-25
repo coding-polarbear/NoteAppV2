@@ -18,12 +18,22 @@
         android:id="@+id/line1"
         android:background="@android:color/darker_gray"
         android:layout_below="@+id/titleText" />
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/contentText"
-        android:layout_below="@+id/line1"
-        android:layout_margin="10dp"/>
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:padding="10dp"
+        android:layout_below="@+id/line1">
+
+        <TextView
+            android:id="@+id/contentText"
+            android:layout_gravity="top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/line1" />
+    </ScrollView>
+
+
 
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
