@@ -34,15 +34,24 @@
     </ScrollView>
 
 
-
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/editButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_create_black_24dp"
-        android:tint="@android:color/white"
-        android:elevation="10dp"
-        android:id="@+id/editButton"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_margin="20dp"/>
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="9dp"
+        android:layout_toStartOf="@+id/deleteButton"
+        android:elevation="10dp"
+        android:src="@drawable/ic_create_black_24dp"
+        android:tint="@android:color/white" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/deleteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/titleText"
+        android:layout_alignTop="@+id/editButton"
+        android:src="@drawable/ic_close_black_24dp"
+        android:tint="@android:color/white"/>
 </RelativeLayout>

@@ -39,7 +39,6 @@ class MainActivity : AppCompatActivity() {
     fun setListView() {
         var noteList : List<Any> = pultusORM.find(Note())
         listView.adapter = ListAdapter(applicationContext, noteList)
-
         listView.setOnItemClickListener { parent, view, position, id ->
             var intent : Intent = Intent(this@MainActivity, DetailViewActivity::class.java)
             intent.putExtra("position", position)

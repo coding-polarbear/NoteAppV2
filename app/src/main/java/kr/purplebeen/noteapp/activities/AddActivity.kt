@@ -2,6 +2,7 @@ package kr.purplebeen.noteapp.activities
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_add.*
 import kr.purplebeen.noteapp.Note
@@ -35,6 +36,7 @@ class AddActivity : AppCompatActivity() {
             var dateFormat : DateFormat = SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
             var date : Date = Date()
             note.date = dateFormat.format(date)
+            Log.d("test", note.title.toString())
             pultusORM.save(note)
 
             Toast.makeText(applicationContext, "성공적으로 저장하였습니다!", Toast.LENGTH_SHORT).show()
