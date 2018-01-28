@@ -1,5 +1,5 @@
 # NoteAppV2
-** Toy Project by using finger print recognition
+> **Toy Project by using finger print recognition**
 
 # Using Technology
 * Kotlin-lang
