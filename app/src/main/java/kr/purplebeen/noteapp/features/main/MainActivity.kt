@@ -1,13 +1,15 @@
-package kr.purplebeen.noteapp.activities
+package kr.purplebeen.noteapp.features.main
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kr.purplebeen.noteapp.Note
 import kr.purplebeen.noteapp.R
 import kr.purplebeen.noteapp.adapters.ListAdapter
+import kr.purplebeen.noteapp.features.add.AddActivity
+import kr.purplebeen.noteapp.features.detailview.DetailViewActivity
 import ninja.sakib.pultusorm.core.PultusORM
 
 class MainActivity : AppCompatActivity() {

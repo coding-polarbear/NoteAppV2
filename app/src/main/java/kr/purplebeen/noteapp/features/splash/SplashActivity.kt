@@ -1,10 +1,11 @@
-package kr.purplebeen.noteapp.activities
+package kr.purplebeen.noteapp.features.splash
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import kr.purplebeen.noteapp.R
+import kr.purplebeen.noteapp.features.fingerdetect.FingerDetectActivity
 
 class SplashActivity : AppCompatActivity() {
 

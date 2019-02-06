@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context="kr.purplebeen.noteapp.activities.SplashActivity">
+    tools:context="kr.purplebeen.noteapp.features.splash.SplashActivity">
 
     <ImageView
         android:layout_width="90dp"

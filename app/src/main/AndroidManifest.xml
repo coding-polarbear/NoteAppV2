@@ -12,9 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.MainActivity" />
+        <activity android:name=".features.main.MainActivity" />
         <activity
-            android:name=".activities.SplashActivity"
+            android:name=".features.splash.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,11 +23,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.FingerDetectActivity"
+            android:name=".features.fingerdetect.FingerDetectActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activities.AddActivity" />
-        <activity android:name=".activities.DetailViewActivity"></activity>
-        <activity android:name=".activities.EditActivity"/>
+        <activity android:name=".features.add.AddActivity" />
+        <activity android:name=".features.detailview.DetailViewActivity"></activity>
+        <activity android:name=".features.edit.EditActivity"/>
     </application>
 
 </manifest>

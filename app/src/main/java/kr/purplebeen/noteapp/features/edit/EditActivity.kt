@@ -1,8 +1,7 @@
-package kr.purplebeen.noteapp.activities
+package kr.purplebeen.noteapp.features.edit
 
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_add.*
 import kr.purplebeen.noteapp.Note
