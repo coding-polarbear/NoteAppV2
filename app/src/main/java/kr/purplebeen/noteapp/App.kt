@@ -12,12 +12,10 @@ class App : Application() {
         super.onCreate()
         Reprint.initialize(this, object: Reprint.Logger {
             override fun logException(throwable: Throwable?, message: String?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 Log.e("RePrint", message,throwable)
             }
 
             override fun log(message: String?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 Log.d("RePrint", message)
             }
         })

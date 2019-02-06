@@ -51,17 +51,17 @@ class DetailViewActivity : AppCompatActivity() {
             val alert : AlertDialog = AlertDialog.Builder(this@DetailViewActivity).create()
             alert.setTitle("안내")
             alert.setMessage("정말로 삭제하시겠습니까?")
-            alert.setButton(AlertDialog.BUTTON_POSITIVE, "확인", {dialogInterface, i ->
+            alert.setButton(AlertDialog.BUTTON_POSITIVE, "확인") { _, i ->
                 val condition: PultusORMCondition = PultusORMCondition.Builder()
                         .eq("noteId", note.noteId)
                         .build()
                 pultusORM.delete(Note(), condition)
                 Toast.makeText(applicationContext, "성공적으로 삭제되었습니다!", Toast.LENGTH_SHORT).show()
                 finish()
-            })
-            alert.setButton(AlertDialog.BUTTON_NEGATIVE, "취소", {dialogInterface, i ->
+            }
+            alert.setButton(AlertDialog.BUTTON_NEGATIVE, "취소") { _, i ->
                 alert.dismiss()
-            })
+            }
             alert.show()
         }
    }
