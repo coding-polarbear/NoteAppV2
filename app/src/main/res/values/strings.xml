@@ -3,5 +3,10 @@
     <string name="success_auth">성공적으로 인증되었습니다!</string>
     <string name="fail_auth">지문인식을 다시시도해주세요"</string>
     <string name="backpress_ment">뒤로가기 버튼을 한번 더 누르면 애플리케이션이 종료됩니다.</string>
-    <string name="save_finish">성공적으로 업데이트 되었습니다!</string>
+    <string name="edit_finish">성공적으로 업데이트 되었습니다!</string>
+    <string name="inform">안내</string>
+    <string name="really_delete">정말로 삭제하시겠습니까?</string>
+    <string name="delete_finish">성공적으로 삭제되었습니다</string>
+    <string name="cancle">취소</string>
+    <string name="ok">확인</string>
 </resources>

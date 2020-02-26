@@ -1,57 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="kr.purplebeen.noteapp.features.detailview.DetailViewActivity">
-    <TextView
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="kr.purplebeen.noteapp.features.detailview.DetailViewModel" />
+    </data>
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-        android:id="@+id/titleText"
-        android:text="제목"
-        android:layout_margin="10dp"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:id="@+id/line1"
-        android:background="@android:color/darker_gray"
-        android:layout_below="@+id/titleText" />
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
-        android:padding="10dp"
-        android:layout_below="@+id/line1">
-
+        android:layout_height="match_parent"
+        tools:context="kr.purplebeen.noteapp.features.detailview.DetailViewActivity">
         <TextView
-            android:id="@+id/contentText"
-            android:layout_gravity="top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/line1" />
-    </ScrollView>
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:id="@+id/titleText"
+            android:text="@{viewModel.titleField}"
+            android:layout_margin="10dp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:id="@+id/line1"
+            android:background="@android:color/darker_gray"
+            android:layout_below="@+id/titleText" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:padding="10dp"
+            android:layout_below="@+id/line1">
+
+            <TextView
+                android:id="@+id/contentText"
+                android:text="@{viewModel.contentField}"
+                android:layout_gravity="top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/line1" />
+        </ScrollView>
 
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/editButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="24dp"
-        android:layout_marginEnd="9dp"
-        android:layout_toStartOf="@+id/deleteButton"
-        android:elevation="10dp"
-        android:src="@drawable/ic_create_black_24dp"
-        android:tint="@android:color/white" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/editButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="24dp"
+            android:layout_marginEnd="9dp"
+            android:layout_toStartOf="@+id/deleteButton"
+            android:onClick="@{viewModel::onEditButtonClicked}"
+            android:elevation="10dp"
+            android:src="@drawable/ic_create_black_24dp"
+            android:tint="@android:color/white" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/deleteButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/titleText"
-        android:layout_alignTop="@+id/editButton"
-        android:src="@drawable/ic_close_black_24dp"
-        android:tint="@android:color/white"/>
-</RelativeLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/deleteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/titleText"
+            android:layout_alignTop="@+id/editButton"
+            android:src="@drawable/ic_close_black_24dp"
+            android:onClick="@{viewModel::onDeleteButtonClicked}"
+            android:tint="@android:color/white"/>
+    </RelativeLayout>
+
+</layout>
