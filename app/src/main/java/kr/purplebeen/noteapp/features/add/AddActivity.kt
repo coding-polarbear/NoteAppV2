@@ -2,45 +2,34 @@ package kr.purplebeen.noteapp.features.add
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_add.*
-import kr.purplebeen.noteapp.Note
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import kr.purplebeen.noteapp.R
-import ninja.sakib.pultusorm.core.PultusORM
-import java.text.DateFormat
-import java.text.SimpleDateFormat
-import java.util.*
+import kr.purplebeen.noteapp.databinding.ActivityAddBinding
 
 class AddActivity : AppCompatActivity() {
-    lateinit var  pultusORM : PultusORM
+    lateinit var mViewModel: AddViewModel
+    lateinit var mBinding: ActivityAddBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add)
-        setORM()
-        setListeners()
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_add)
+        mViewModel = ViewModelProviders.of(this).get(AddViewModel::class.java)
+        mBinding.viewModel = mViewModel
+
+        observeViewModel()
     }
 
-    fun setORM() {
-        val appPath : String = applicationContext.filesDir.absolutePath
-        pultusORM = PultusORM("note.db", appPath)
-    }
+    fun observeViewModel() {
+        mViewModel.saveButtonCallback.observe(this, Observer {
+            mViewModel.save(mBinding.editTitle.text.toString(),
+                            mBinding.editContent.text.toString())
+        })
 
-    fun setListeners() {
-        saveButton.setOnClickListener {
-            var note : Note = Note()
-            note.title = editTitle.text.toString()
-            note.content = editContent.text.toString()
-
-            var dateFormat : DateFormat = SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
-            var date : Date = Date()
-            note.date = dateFormat.format(date)
-            Log.d("test", note.title.toString())
-            pultusORM.save(note)
-
-            Toast.makeText(applicationContext, "성공적으로 저장하였습니다!", Toast.LENGTH_SHORT).show()
+        mViewModel.finishCallback.observe(this, Observer {
             finish()
-        }
+        })
     }
+
 }

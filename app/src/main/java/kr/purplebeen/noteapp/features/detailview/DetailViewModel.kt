@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
+import kr.purplebeen.noteapp.Consts
 import kr.purplebeen.noteapp.Note
 import kr.purplebeen.noteapp.R
 import kr.purplebeen.noteapp.mvvm.SingleLiveEvent
@@ -24,7 +25,7 @@ class DetailViewModel(application:Application): AndroidViewModel(application) {
 
     init {
         appPath = getApplication<Application>().filesDir.absolutePath
-        pultusORM = PultusORM("note.db", appPath)
+        pultusORM = PultusORM(Consts.DB_FILE, appPath)
     }
 
     fun loadData(position: Int) {

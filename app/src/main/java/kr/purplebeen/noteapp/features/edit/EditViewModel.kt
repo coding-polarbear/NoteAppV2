@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import kotlinx.android.synthetic.main.activity_add.*
+import kr.purplebeen.noteapp.Consts
 import kr.purplebeen.noteapp.Note
 import kr.purplebeen.noteapp.R
 import kr.purplebeen.noteapp.mvvm.SingleLiveEvent
@@ -25,7 +26,7 @@ class EditViewModel(application: Application): AndroidViewModel(application) {
 
     init {
         appPath = getApplication<Application>().filesDir.absolutePath
-        pultusORM = PultusORM("note.db", appPath)
+        pultusORM = PultusORM(Consts.DB_FILE, appPath)
     }
 
 
@@ -49,7 +50,7 @@ class EditViewModel(application: Application): AndroidViewModel(application) {
                 .condition(condition)
                 .build()
         pultusORM.update(Note(), updater)
-        Toast.makeText(getApplication(), getApplication<Application>().resources.getString(R.string.save_finish), Toast.LENGTH_SHORT).show()
+        Toast.makeText(getApplication(), getApplication<Application>().resources.getString(R.string.edit_finish), Toast.LENGTH_SHORT).show()
         finishCallback.call()
     }
 }

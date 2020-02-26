@@ -6,6 +6,7 @@ import android.widget.AdapterView
 import android.widget.ListView
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import kr.purplebeen.noteapp.Consts
 import kr.purplebeen.noteapp.Note
 import kr.purplebeen.noteapp.mvvm.SingleLiveEvent
 import ninja.sakib.pultusorm.core.PultusORM
@@ -20,9 +21,8 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
 
     fun initPultusORM() {
         val appPath : String = getApplication<Application>().filesDir.absolutePath
-        pultusORM = PultusORM("note.db", appPath)
+        pultusORM = PultusORM(Consts.DB_FILE, appPath)
         noteList = pultusORM.find(Note())
-
     }
 
     fun refreshData() {

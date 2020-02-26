@@ -22,6 +22,7 @@ class DetailViewActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail_view)
         mViewModel = ViewModelProviders.of(this).get(DetailViewModel::class.java)
+        mBinding.viewModel = mViewModel
         mViewModel.loadData(position)
         observeViewModel()
     }
