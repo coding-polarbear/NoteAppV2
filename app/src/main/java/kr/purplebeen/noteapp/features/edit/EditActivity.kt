@@ -3,9 +3,13 @@ package kr.purplebeen.noteapp.features.edit
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_add.*
 import kr.purplebeen.noteapp.Note
 import kr.purplebeen.noteapp.R
+import kr.purplebeen.noteapp.databinding.ActivityEditBinding
 import ninja.sakib.pultusorm.core.PultusORM
 import ninja.sakib.pultusorm.core.PultusORMCondition
 import ninja.sakib.pultusorm.core.PultusORMUpdater
@@ -14,44 +18,28 @@ import ninja.sakib.pultusorm.core.PultusORMUpdater
  * Created by baehy on 2018. 1. 25..
  */
 class EditActivity : AppCompatActivity() {
+    lateinit var mViewModel: EditViewModel
+    lateinit var mBinding:ActivityEditBinding
     val position : Int by lazy {
         intent.extras.getInt("position")
     }
-    lateinit var note : Note
-    lateinit var pultusORM : PultusORM
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add)
-
-        setORM()
-        loadData()
-        setListeners()
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_edit)
+        mViewModel = ViewModelProviders.of(this).get(EditViewModel::class.java)
+        mBinding.viewModel = mViewModel
+        mViewModel.loadData(position)
+        observeViewModel()
     }
 
-    fun setORM() {
-        val appPath : String = applicationContext.filesDir.absolutePath
-        pultusORM = PultusORM("note.db", appPath)
-    }
+    fun observeViewModel() {
+        mViewModel.saveButtonClickCallback.observe(this, Observer {
+            mViewModel.save(mBinding.editTitle.text.toString(),
+                            mBinding.editContent.text.toString())
+        })
 
-    fun loadData() {
-        note = pultusORM.find(Note())[position] as Note
-        editTitle.setText(note.title)
-        editContent.setText(note.content)
-    }
-
-    fun setListeners() {
-        saveButton.setOnClickListener {
-            val condition: PultusORMCondition = PultusORMCondition.Builder()
-                    .eq("noteId", note.noteId)
-                    .build()
-            val updater : PultusORMUpdater = PultusORMUpdater.Builder()
-                    .set("title", editTitle.text.toString())
-                    .set("content", editContent.text.toString())
-                    .condition(condition)
-                    .build()
-            pultusORM.update(Note(), updater)
-            Toast.makeText(applicationContext, "성공적으로 업데이트 되었습니다!", Toast.LENGTH_SHORT).show()
+        mViewModel.finishCallback.observe(this, Observer {
             finish()
-        }
+        })
     }
 }

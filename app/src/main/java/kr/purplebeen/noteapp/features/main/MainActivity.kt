@@ -4,48 +4,49 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_main.*
-import kr.purplebeen.noteapp.Note
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import kr.purplebeen.noteapp.R
 import kr.purplebeen.noteapp.adapters.ListAdapter
+import kr.purplebeen.noteapp.databinding.ActivityMainBinding
 import kr.purplebeen.noteapp.features.add.AddActivity
 import kr.purplebeen.noteapp.features.detailview.DetailViewActivity
-import ninja.sakib.pultusorm.core.PultusORM
 
 class MainActivity : AppCompatActivity() {
     val DURATION_TIME : Long = 2000L
     var prevPressTime : Long = 0L
 
-    lateinit var  pultusORM : PultusORM
+    private lateinit var mViewModel: MainViewModel
+    private lateinit var mBinding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        mViewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        mBinding.viewModel = mViewModel
 
-        setORM()
-        setListener()
+        observeViewModel()
+        mViewModel.initPultusORM()
         setListView()
     }
 
-    fun setORM() {
-        val appPath : String = applicationContext.filesDir.absolutePath
-        pultusORM = PultusORM("note.db", appPath)
-    }
-
-    fun setListener() {
-        addButton.setOnClickListener {
+    fun observeViewModel() {
+        mViewModel.addButtonCallback.observe(this, Observer {
             startActivity(Intent(this@MainActivity, AddActivity::class.java))
-        }
-    }
+        })
 
-    fun setListView() {
-        var noteList : List<Any> = pultusORM.find(Note())
-        listView.adapter = ListAdapter(applicationContext, noteList)
-        listView.setOnItemClickListener { parent, view, position, id ->
+        mViewModel.clickedPostionLiveData.observe(this, Observer{position ->
             var intent : Intent = Intent(this@MainActivity, DetailViewActivity::class.java)
             intent.putExtra("position", position)
             startActivity(intent)
-        }
+        })
+    }
+
+
+    fun setListView() {
+        mBinding.listView.adapter = ListAdapter(applicationContext, mViewModel.noteList)
+        mBinding.listView.onItemClickListener = mViewModel.onItemClickListener
     }
 
     override fun onBackPressed() {
@@ -55,13 +56,14 @@ class MainActivity : AppCompatActivity() {
             android.os.Process.killProcess(android.os.Process.myPid())
         } else {
             prevPressTime = System.currentTimeMillis()
-            Toast.makeText(applicationContext, "뒤로가기 버튼을 한번 더 누르면 애플리케이션이 종료됩니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, resources.getString(R.string.backpress_ment), Toast.LENGTH_SHORT).show()
         }
 
     }
 
     override fun onResume() {
         super.onResume()
+        mViewModel.refreshData()
         setListView()
     }
 }

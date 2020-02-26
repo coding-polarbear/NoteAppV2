@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">NoteApp</string>
+    <string name="success_auth">성공적으로 인증되었습니다!</string>
+    <string name="fail_auth">지문인식을 다시시도해주세요"</string>
+    <string name="backpress_ment">뒤로가기 버튼을 한번 더 누르면 애플리케이션이 종료됩니다.</string>
+    <string name="save_finish">성공적으로 업데이트 되었습니다!</string>
 </resources>
