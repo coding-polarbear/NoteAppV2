@@ -8,6 +8,9 @@ import com.github.ajalt.reprint.core.Reprint
  * Created by baehy on 2018. 1. 24..
  */
 class App : Application() {
+    companion object {
+        val TAG: String = "RePrint"
+    }
     override fun onCreate() {
         super.onCreate()
         Reprint.initialize(this, object: Reprint.Logger {
@@ -16,7 +19,9 @@ class App : Application() {
             }
 
             override fun log(message: String?) {
-                Log.d("RePrint", message)
+                message?.let {
+                    Log.d(TAG, it)
+                }
             }
         })
     }

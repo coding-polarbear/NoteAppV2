@@ -6,22 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import kotlinx.android.synthetic.main.item_default_note.view.*
-import kr.purplebeen.noteapp.Note
+import androidx.databinding.DataBindingUtil
 import kr.purplebeen.noteapp.R
+import kr.purplebeen.noteapp.databinding.ItemDefaultNoteBinding
+import kr.purplebeen.noteapp.model.Note
 
 /**
  * Created by baehy on 2018. 1. 25..
  */
 class ListAdapter(var context : Context, var noteList : List<Any>) : BaseAdapter() {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        var inflater : LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        var layoutView : View = inflater.inflate(R.layout.item_default_note, parent, false)
-
+        var binding: ItemDefaultNoteBinding = ItemDefaultNoteBinding.inflate(LayoutInflater.from(context), parent, false)
         var note : Note = noteList[position] as Note
-        layoutView.titleText.text = note.title
-        layoutView.dateText.text = note.date
-        return layoutView
+        binding.note = note
+        return binding.root
     }
 
     override fun getItem(position: Int): Any {

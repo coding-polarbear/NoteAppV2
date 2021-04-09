@@ -12,7 +12,7 @@ import kr.purplebeen.noteapp.features.edit.EditActivity
 
 class DetailViewActivity : AppCompatActivity() {
     val position : Int by lazy {
-        intent.extras.getInt("position")
+        intent.extras?.getInt("position") ?: -1
     }
 
     lateinit var mBinding: ActivityDetailViewBinding

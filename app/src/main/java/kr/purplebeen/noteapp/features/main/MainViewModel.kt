@@ -1,33 +1,52 @@
 package kr.purplebeen.noteapp.features.main
 
+import android.annotation.SuppressLint
 import android.app.Application
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
-import android.widget.ListView
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.room.Room
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kr.purplebeen.noteapp.Consts
-import kr.purplebeen.noteapp.Note
+import kr.purplebeen.noteapp.db.AppDatabase
+import kr.purplebeen.noteapp.model.Note
 import kr.purplebeen.noteapp.mvvm.SingleLiveEvent
-import ninja.sakib.pultusorm.core.PultusORM
 
-class MainViewModel(application: Application): AndroidViewModel(application) {
+class MainViewModel(application: Application) : AndroidViewModel(application) {
     val addButtonCallback: SingleLiveEvent<Void> = SingleLiveEvent()
+    val listLoadedEvent: SingleLiveEvent<Void> = SingleLiveEvent()
     val clickedPostionLiveData: MutableLiveData<Int> = MutableLiveData()
-    lateinit var noteList: List<Any>
-    private lateinit var pultusORM: PultusORM
+    val db = Room.databaseBuilder(getApplication(),
+            AppDatabase::class.java,
+            Consts.DB_NAME)
+            .build()
+    var noteList: List<Note> = ArrayList()
+        private set
 
-    val onItemClickListener : AdapterView.OnItemClickListener = AdapterView.OnItemClickListener { parent, vuew, position, id -> clickedPostionLiveData.value = position }
+    companion object {
+        val TAG: String = MainViewModel::class.java.simpleName
+    }
+    val onItemClickListener: AdapterView.OnItemClickListener = AdapterView.OnItemClickListener { parent, vuew, position, id -> clickedPostionLiveData.value = position }
 
-    fun initPultusORM() {
-        val appPath : String = getApplication<Application>().filesDir.absolutePath
-        pultusORM = PultusORM(Consts.DB_FILE, appPath)
-        noteList = pultusORM.find(Note())
+    @SuppressLint("CheckResult")
+    fun loadNoteData() {
+        db.noteDao()
+                .getAll()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({noteList ->
+                    this.noteList = noteList
+                    listLoadedEvent.call()
+                }, {error ->
+                    error.message?.let {
+                        Log.e(TAG, it)
+                    }
+                })
     }
 
-    fun refreshData() {
-        noteList = pultusORM.find(Note())
-    }
     fun onAddButtonClicked(view: View) {
         addButtonCallback.call()
     }

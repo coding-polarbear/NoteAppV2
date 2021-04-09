@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import kr.purplebeen.noteapp.R
 import kr.purplebeen.noteapp.adapters.ListAdapter
 import kr.purplebeen.noteapp.databinding.ActivityMainBinding
@@ -23,12 +23,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        mViewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        mViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         mBinding.viewModel = mViewModel
 
         observeViewModel()
-        mViewModel.initPultusORM()
-        setListView()
+        mViewModel.loadNoteData()
+        initListView()
     }
 
     fun observeViewModel() {
@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    fun setListView() {
+    fun initListView() {
         mBinding.listView.adapter = ListAdapter(applicationContext, mViewModel.noteList)
         mBinding.listView.onItemClickListener = mViewModel.onItemClickListener
     }
@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        mViewModel.refreshData()
-        setListView()
+        mViewModel.loadNoteData()
+        initListView()
     }
 }

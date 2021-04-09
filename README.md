@@ -9,3 +9,7 @@
 
 **updated in 2020.02.26**
 * Using MVVM Architecture
+
+**update in 2021.04.09**
+* DB 변경 : pultusORM -> Room
+* Rxjava2 적용
